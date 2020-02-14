@@ -1,4 +1,4 @@
-# Write classes for the following class hierarchy:
+# Write classes for the following class hierarchy: Starting
 #
 #  [Vehicle]->[FlightVehicle]->[Starship]
 #      |                |
