@@ -1,6 +1,19 @@
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
+import csv
 
+
+class City:
+
+  def __init__(self, name, lat, lon):
+    self.name = name
+    self.lat = lat
+    self.lon = lon
+
+  # Convert to string
+
+  def __str__(self):
+    return f"{self.name}: ({self.lat}, {self.lon})"
 
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
@@ -20,7 +33,12 @@ def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
-    
+
+  with open('cities.csv', newline='') as c:
+    reader = csv.reader(c)
+    for row in reader:
+      if not row[0] == "city":  # removes header
+        cities.append(City(row[0],float(row[4]),float(row[5])))  # row indices point to which data we are targeting in cities.csv file.  Implementing float method here affect stretch?
     return cities
 
 cityreader(cities)
@@ -67,5 +85,27 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # TODO Ensure that the lat and lon valuse are all floats
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
+
+  # Convert to float - float() method returns a floating point number from a number or a string
+
+  lat1 = float(lat1)
+  lon1 = float(lon1)
+  lat2 = float(lat2)
+  lon2 = float(lon2)
+
+  # normalize input data ***come back to this***
+  # if not((lat1 > lat2 and lon1 > lon2) or (lat2 > lat1 and lon2 > lon1)):
+  #     lon1, lon2 = lon2, lon1
+
+  if lat2 > lat1:
+      lat1, lat2 = lat2, lat1
+    
+  if lon2 > lon1:
+      lon1, lon2 = lon2, lon1
+
+  # pass lat/lon values in scope of request
+  # for c in cities:
+  #   if c.lat <= lat1 and c.lon <= lon1 and c.lat >= lat2 and c.lon >= lon2:
+  #     within.append(c)
 
   return within
